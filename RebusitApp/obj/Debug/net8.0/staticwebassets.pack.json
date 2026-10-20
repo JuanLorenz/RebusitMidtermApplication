@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\RebusitApp.bundle.scp.css",
+      "PackagePath": "staticwebassets\\RebusitApp.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\wwwroot\\bg-login.jpg",
+      "PackagePath": "staticwebassets\\bg-login.jpg"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\wwwroot\\bg-register.jpg",
+      "PackagePath": "staticwebassets\\bg-register.jpg"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\wwwroot\\luzon-arena.jpg",
+      "PackagePath": "staticwebassets\\luzon-arena.jpg"
+    },
+    {
+      "Id": "C:\\Users\\L23Y16W34\\Downloads\\RebusitMidtermsApp\\RebusitMidtermApplication\\RebusitApp\\wwwroot\\visayas-arena.jpg",
+      "PackagePath": "staticwebassets\\visayas-arena.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.RebusitApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.RebusitApp.props",
+      "PackagePath": "build\\RebusitApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.RebusitApp.props",
+      "PackagePath": "buildMultiTargeting\\RebusitApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.RebusitApp.props",
+      "PackagePath": "buildTransitive\\RebusitApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

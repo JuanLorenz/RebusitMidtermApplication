@@ -1,0 +1,231 @@
+@page "/dashboard"
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+
+<div class="min-h-screen bg-[#050907] flex flex-col justify-between text-zinc-100 font-sans selection:bg-red-600 selection:text-white">
+    
+    <!-- Top Entertainment Bar -->
+    <header class="bg-[#0B1310] border-b border-zinc-800/80 px-6 py-4 flex justify-between items-center shadow-2xl sticky top-0 z-40">
+        <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center font-black text-amber-400 text-xl shadow border border-red-500/30">
+                ⚡
+            </div>
+            <div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-lg font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200 uppercase">Sabong Prime</span>
+                    <span class="bg-emerald-500/10 text-emerald-400 text-[9px] font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/30 uppercase">LIVE NETWORK</span>
+                </div>
+                <p class="text-[10px] text-zinc-400 font-mono">MATCH #88 • LUZON MAIN ARENA</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-6">
+            <!-- Simulated Wallet Balance Widget -->
+            <div class="hidden sm:flex items-center space-x-2 bg-[#050907] px-4 py-2 rounded-xl border border-zinc-800">
+                <span class="text-xs text-zinc-400 font-bold uppercase">Balance:</span>
+                <span class="text-sm font-black text-amber-400 font-mono">₱12,500.00</span>
+            </div>
+
+            <button @onclick="HandleLogout"
+                    class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-black text-xs uppercase tracking-widest rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.3)] transition active:scale-95">
+                Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Live Broadcast Stage -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 flex flex-col items-center space-y-6">
+        
+        <!-- Live Odds & Interactive Wagering Bar -->
+        <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+            
+            <!-- Left Fighter (Meron) -->
+            <button @onclick='() => OpenBetModal("Left Side (Meron)")'
+                    class="group relative bg-gradient-to-r from-red-950/80 to-[#0B1310] hover:from-red-900/90 border border-red-800/80 hover:border-red-500 p-4 rounded-2xl shadow-xl transition-all duration-200 flex justify-between items-center text-left">
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        <span class="text-[10px] font-black text-red-400 uppercase tracking-widest">MERON</span>
+                    </div>
+                    <h3 class="text-lg font-black text-white group-hover:text-amber-400 transition">RED ROOSTER</h3>
+                    <p class="text-[11px] font-mono text-zinc-400 mt-0.5">Payout Multiplier: <span class="text-red-400 font-bold">1.85x</span></p>
+                </div>
+                <div class="bg-red-600 text-white font-black text-xs uppercase px-4 py-3 rounded-xl shadow group-hover:bg-red-500 transition">
+                    Bet Left
+                </div>
+            </button>
+
+            <!-- Center Match Information -->
+            <div class="bg-[#0B1310] border border-zinc-800 px-4 py-3 rounded-2xl text-center shadow-lg">
+                <span class="text-[10px] font-mono text-amber-400 uppercase tracking-widest block mb-0.5">CHAMPIONSHIP DERBY</span>
+                <span class="text-xl font-black text-white tracking-widest">VS</span>
+                <span class="text-[10px] font-mono text-zinc-400 block mt-0.5">ACCEPTING WAGERS</span>
+            </div>
+
+            <!-- Right Fighter (Wala) -->
+            <button @onclick='() => OpenBetModal("Right Side (Wala)")'
+                    class="group relative bg-gradient-to-l from-amber-950/80 to-[#0B1310] hover:from-amber-900/90 border border-amber-800/80 hover:border-amber-500 p-4 rounded-2xl shadow-xl transition-all duration-200 flex justify-between items-center text-right">
+                <div class="bg-amber-500 text-zinc-950 font-black text-xs uppercase px-4 py-3 rounded-xl shadow group-hover:bg-amber-400 transition">
+                    Bet Right
+                </div>
+                <div>
+                    <div class="flex items-center justify-end space-x-2">
+                        <span class="text-[10px] font-black text-amber-400 uppercase tracking-widest">WALA</span>
+                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    </div>
+                    <h3 class="text-lg font-black text-white group-hover:text-amber-400 transition">BLUE DRAGON</h3>
+                    <p class="text-[11px] font-mono text-zinc-400 mt-0.5">Payout Multiplier: <span class="text-amber-400 font-bold">2.10x</span></p>
+                </div>
+            </button>
+        </div>
+
+        <!-- Center YouTube Video Container (Broadcast Feed View) -->
+        <div class="w-full bg-[#0B1310] border border-zinc-800 rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+            <!-- Minimal Stream Header Bar -->
+            <div class="bg-[#050907] px-5 py-3 border-b border-zinc-800 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <span class="w-3 h-3 bg-red-600 rounded-full animate-ping"></span>
+                    <span class="text-xs font-black text-amber-400 uppercase tracking-widest">LIVE BROADCAST FEED</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-[10px] text-zinc-400 font-mono bg-zinc-900 px-2.5 py-1 rounded border border-zinc-800">1080p60 ULTRA HD</span>
+                </div>
+            </div>
+
+            <!-- Embedded Pure YouTube Player -->
+            <div class="relative w-full aspect-video bg-black">
+                <iframe class="absolute inset-0 w-full h-full border-0"
+                        src="https://www.youtube.com/embed/xEvUDthFt_o?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0" 
+                        title="Sabong Arena Stream"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </main>
+
+    <!-- Infinite Spanning Broadcast Footer -->
+    <footer class="w-full bg-[#0B1310] text-center py-4 text-xs text-zinc-400 border-t border-zinc-800 font-mono tracking-wider">
+        Sabong Prime Entertainment Network &copy; 2026. All rights reserved.
+    </footer>
+
+    <!-- PAYMENT & BET MODAL POPUP -->
+    @if (isModalOpen)
+    {
+        <div class="fixed inset-0 bg-zinc-950/85 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div class="w-full max-w-md bg-[#0B1310] border border-zinc-800 rounded-2xl p-6 shadow-2xl text-zinc-100 relative">
+                
+                <!-- Modal Header -->
+                <div class="flex justify-between items-center mb-5 border-b border-zinc-800 pb-3">
+                    <div>
+                        <h3 class="text-lg font-black text-amber-400 uppercase tracking-wide">Place Live Wager</h3>
+                        <p class="text-xs text-zinc-400">Selected Target: <span class="text-white font-bold">@selectedSide</span></p>
+                    </div>
+                    <button @onclick="CloseModal" class="text-zinc-400 hover:text-white font-bold text-lg px-2">✕</button>
+                </div>
+
+                @if (betSubmitted)
+                {
+                    <div class="py-8 text-center space-y-4">
+                        <div class="w-14 h-14 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto font-black text-2xl shadow-lg">✓</div>
+                        <h4 class="text-xl font-black text-emerald-400 uppercase">Wager Confirmed!</h4>
+                        <p class="text-xs text-zinc-400">Your wager of <span class="text-amber-400 font-bold font-mono">₱@betAmount</span> has been registered for <span class="text-white font-bold">@selectedSide</span>.</p>
+                        <button @onclick="CloseModal" class="mt-4 px-8 py-3 bg-amber-500 text-zinc-950 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-amber-400 transition">Return to Arena</button>
+                    </div>
+                }
+                else
+                {
+                    <!-- Payment Form -->
+                    <form @onsubmit="SubmitBet" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-black text-amber-400 uppercase tracking-widest mb-1.5">Payment Gateway</label>
+                            <select @bind="paymentMethod" required class="w-full px-3 py-3 bg-[#050907] border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-red-600">
+                                <option value="">Select Gateway</option>
+                                <option value="GCash">GCash Wallet</option>
+                                <option value="Maya">Maya Wallet</option>
+                                <option value="Bank Transfer">Direct Bank Wire</option>
+                                <option value="Arena Cashier">Arena VIP Cashier</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black text-amber-400 uppercase tracking-widest mb-1.5">Account / Card Number</label>
+                            <input type="text" @bind="accountNumber" placeholder="09XXXXXXXXX" required 
+                                   class="w-full px-3 py-3 bg-[#050907] border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-red-600" />
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black text-amber-400 uppercase tracking-widest mb-1.5">Account Holder Name</label>
+                            <input type="text" @bind="accountName" placeholder="Full Legal Name" required 
+                                   class="w-full px-3 py-3 bg-[#050907] border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-red-600" />
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black text-amber-400 uppercase tracking-widest mb-1.5">Wager Amount (PHP)</label>
+                            <input type="number" min="100" @bind="betAmount" placeholder="Min. ₱100" required 
+                                   class="w-full px-3 py-3 bg-[#050907] border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-red-600 font-mono" />
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="flex space-x-3 pt-4 border-t border-zinc-800">
+                            <button type="button" @onclick="CloseModal" class="w-1/2 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs uppercase tracking-wider rounded-xl transition">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                    disabled="@(!IsFormValid)"
+                                    class="w-1/2 py-3 bg-red-600 hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-black text-xs uppercase tracking-widest rounded-xl shadow-lg transition">
+                                Confirm Wager
+                            </button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private bool isModalOpen = false;
+    private bool betSubmitted = false;
+    private string selectedSide = string.Empty;
+
+    private string paymentMethod = string.Empty;
+    private string accountNumber = string.Empty;
+    private string accountName = string.Empty;
+    private decimal? betAmount = null;
+
+    private bool IsFormValid => 
+        !string.IsNullOrWhiteSpace(paymentMethod) &&
+        !string.IsNullOrWhiteSpace(accountNumber) &&
+        !string.IsNullOrWhiteSpace(accountName) &&
+        betAmount.HasValue && betAmount.Value > 0;
+
+    private void OpenBetModal(string side)
+    {
+        selectedSide = side;
+        betSubmitted = false;
+        paymentMethod = string.Empty;
+        accountNumber = string.Empty;
+        accountName = string.Empty;
+        betAmount = null;
+        isModalOpen = true;
+    }
+
+    private void CloseModal()
+    {
+        isModalOpen = false;
+    }
+
+    private void SubmitBet()
+    {
+        if (IsFormValid)
+        {
+            betSubmitted = true;
+        }
+    }
+
+    private void HandleLogout()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}
