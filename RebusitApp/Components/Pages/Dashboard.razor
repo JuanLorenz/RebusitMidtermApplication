@@ -23,7 +23,7 @@
             <!-- Simulated Wallet Balance Widget -->
             <div class="hidden sm:flex items-center space-x-2 bg-[#050907] px-4 py-2 rounded-xl border border-zinc-800">
                 <span class="text-xs text-zinc-400 font-bold uppercase">Balance:</span>
-                <span class="text-sm font-black text-amber-400 font-mono">₱12,500.00</span>
+                <span class="text-sm font-black text-amber-400 font-mono">₱@currentBalance.ToString("N2")</span>
             </div>
 
             <button @onclick="HandleLogout"
@@ -73,7 +73,7 @@
                         <span class="text-[10px] font-black text-amber-400 uppercase tracking-widest">WALA</span>
                         <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     </div>
-                    <h3 class="text-lg font-black text-white group-hover:text-amber-400 transition">BLUE DRAGON</h3>
+                    <h3 class="text-lg font-black text-white group-hover:text-amber-400 transition">GOLDEN FLYER</h3>
                     <p class="text-[11px] font-mono text-zinc-400 mt-0.5">Payout Multiplier: <span class="text-amber-400 font-bold">2.10x</span></p>
                 </div>
             </button>
@@ -129,7 +129,7 @@
                     <div class="py-8 text-center space-y-4">
                         <div class="w-14 h-14 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto font-black text-2xl shadow-lg">✓</div>
                         <h4 class="text-xl font-black text-emerald-400 uppercase">Wager Confirmed!</h4>
-                        <p class="text-xs text-zinc-400">Your wager of <span class="text-amber-400 font-bold font-mono">₱@betAmount</span> has been registered for <span class="text-white font-bold">@selectedSide</span>.</p>
+                        <p class="text-xs text-zinc-400">Your wager of <span class="text-amber-400 font-bold font-mono">₱@betAmount?.ToString("N2")</span> has been registered for <span class="text-white font-bold">@selectedSide</span>.</p>
                         <button @onclick="CloseModal" class="mt-4 px-8 py-3 bg-amber-500 text-zinc-950 font-black rounded-xl text-xs uppercase tracking-widest hover:bg-amber-400 transition">Return to Arena</button>
                     </div>
                 }
@@ -162,9 +162,18 @@
 
                         <div>
                             <label class="block text-[10px] font-black text-amber-400 uppercase tracking-widest mb-1.5">Wager Amount (PHP)</label>
-                            <input type="number" min="100" @bind="betAmount" placeholder="Min. ₱100" required 
+                            <input type="number" min="100" max="@currentBalance" @bind="betAmount" placeholder="Min. ₱100" required 
                                    class="w-full px-3 py-3 bg-[#050907] border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-red-600 font-mono" />
+                            @if (betAmount.HasValue && betAmount.Value > currentBalance)
+                            {
+                                <p class="text-red-500 text-[11px] mt-1 font-mono">Amount exceeds current balance (₱@currentBalance.ToString("N2")).</p>
+                            }
                         </div>
+
+                        @if (!string.IsNullOrEmpty(errorMessage))
+                        {
+                            <p class="text-red-500 text-xs font-bold text-center mt-2">@errorMessage</p>
+                        }
 
                         <!-- Action buttons -->
                         <div class="flex space-x-3 pt-4 border-t border-zinc-800">
@@ -185,6 +194,9 @@
 </div>
 
 @code {
+    private const decimal INITIAL_BALANCE = 12500.00m;
+    private decimal currentBalance = INITIAL_BALANCE;
+
     private bool isModalOpen = false;
     private bool betSubmitted = false;
     private string selectedSide = string.Empty;
@@ -194,11 +206,19 @@
     private string accountName = string.Empty;
     private decimal? betAmount = null;
 
+    private string errorMessage = string.Empty;
+
+    // Resets balance to the initial value every time this component is initialized (login / reload)
+    protected override void OnInitialized()
+    {
+        currentBalance = INITIAL_BALANCE;
+    }
+
     private bool IsFormValid => 
         !string.IsNullOrWhiteSpace(paymentMethod) &&
         !string.IsNullOrWhiteSpace(accountNumber) &&
         !string.IsNullOrWhiteSpace(accountName) &&
-        betAmount.HasValue && betAmount.Value > 0;
+        betAmount.HasValue && betAmount.Value > 0 && betAmount.Value <= currentBalance;
 
     private void OpenBetModal(string side)
     {
@@ -208,6 +228,7 @@
         accountNumber = string.Empty;
         accountName = string.Empty;
         betAmount = null;
+        errorMessage = string.Empty;
         isModalOpen = true;
     }
 
@@ -220,7 +241,16 @@
     {
         if (IsFormValid)
         {
-            betSubmitted = true;
+            if (betAmount.HasValue && betAmount.Value <= currentBalance)
+            {
+                currentBalance -= betAmount.Value;
+                betSubmitted = true;
+                errorMessage = string.Empty;
+            }
+            else
+            {
+                errorMessage = "Insufficient account balance to place this wager.";
+            }
         }
     }
 

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RebusitApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc3d3ca9385cb5cb5e0f2c8e1d1d4a1cfad58ea4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+813fe9ee562e182df2837b4ca00e72c222023ec3")]
 [assembly: System.Reflection.AssemblyProductAttribute("RebusitApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RebusitApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
